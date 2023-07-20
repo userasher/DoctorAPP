@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 //here useEffect is a react hook
 import axios from "axios"; //we call network with this
+import Layout from "../components/Layout";
 const HomePage = () => {
   //login user data
   const getUserData = async () => {
@@ -25,9 +26,9 @@ const HomePage = () => {
     getUserData();
   }, []);
   return (
-    <div>
+    <Layout>
       <h1>Homepage</h1>
-    </div>
+    </Layout>
   );
 };
 

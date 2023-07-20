@@ -1,16 +1,21 @@
 import { Form, Input, message } from "antd";
 import "../styles/RegisterStyles.css";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { showLoading, hideLoading } from "../redux/features/alertSlice";
 import axios from "axios"; //we call network with this
 import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
   //constant variable for navigate method from reactdom router
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   //form handler function
   const onfinishHandler = async (values) => {
     try {
+      dispatch(showLoading());
       const res = await axios.post("/api/v1/user/register", values);
+      dispatch(hideLoading());
       //userctrl.js file me success ki jo spelling hai wo aur ye same hone chahiye
       if (res.data.success) {
         message.success("Registered successfully!"); //antd me alert box ke liye
@@ -19,6 +24,7 @@ const Register = () => {
         message.error(res.data.message);
       }
     } catch (error) {
+      dispatch(hideLoading());
       console.log(error);
       message.error("something went wrong");
     }

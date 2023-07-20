@@ -1,15 +1,20 @@
 import React from "react";
 import { Form, Input, message } from "antd";
+import { useDispatch } from "react-redux";
+import { showLoading, hideLoading } from "../redux/features/alertSlice";
 import "../styles/RegisterStyles.css";
 import axios from "axios"; //we call network with this
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   //jo values user ne enter ki hai usse use page ke backend me lane ke liye
   const onfinishHandler = async (values) => {
     try {
+      dispatch(showLoading());
       const res = await axios.post("/api/v1/user/login", values);
+      dispatch(hideLoading());
       if (res.data.success) {
         localStorage.setItem("token", res.data.token);
         message.success("Login Successful");
@@ -18,6 +23,7 @@ const Login = () => {
         message.error(res.data.message);
       }
     } catch (error) {
+      dispatch(hideLoading());
       console.log(error);
       message.error("Something went wrong");
     }
