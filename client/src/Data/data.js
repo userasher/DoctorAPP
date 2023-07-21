@@ -1,6 +1,7 @@
 // ye sab sidebar menu me hoga
 
-export const SidebarMenu = [
+//for user
+export const userMenu = [
   {
     name: "Home",
     path: "/",
@@ -21,9 +22,23 @@ export const SidebarMenu = [
     path: "/profile",
     icon: "fa-solid fa-user",
   },
+];
+
+//for admin menu
+export const adminMenu = [
   {
-    name: "Logout",
-    path: "/logout",
-    icon: "fa-solid fa-arrow-right-from-bracket",
+    name: "Home",
+    path: "/",
+    icon: "fa-solid fa-house-medical",
+  },
+  {
+    name: "Doctor",
+    path: "/doctors",
+    icon: "fa-solid fa-user-doctor",
+  },
+  {
+    name: "Users",
+    path: "/users",
+    icon: "fa-solid fa-user",
   },
 ];

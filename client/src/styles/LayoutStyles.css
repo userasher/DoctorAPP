@@ -72,3 +72,27 @@
 .active a, .active i{
     color: blue
 }
+
+/* overall header content ke liye */
+.header-content{
+    margin: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 40px;
+}
+
+/* notification bell ke liye */
+.header-content i{
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+/* header me jo user name ayega uske liye */
+.header-content a{
+    text-decoration: none;
+    color: blue;
+    margin: 0 10px;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+}

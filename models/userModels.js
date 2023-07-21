@@ -2,6 +2,7 @@
 
 const mongoose = require("mongoose");
 
+//yaha pe jo bhi fields add karnege wo database me dikhengi
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -14,6 +15,23 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "password is required"],
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  isDoctor: {
+    type: Boolean,
+    default: false,
+  },
+  // ye cheeze admin ko notify karne ke liye use hui hai
+  notification: {
+    type: Array,
+    default: [],
+  },
+  seennotification: {
+    type: Array,
+    default: [],
   },
 });
 

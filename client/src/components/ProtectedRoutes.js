@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../redux/features/alertSlice";
 import axios from "axios";
+import { setUser } from "../redux/features/userSlice";
 
 export default function ProtectedRoutes({ children }) {
   const dispatch = useDispatch();
@@ -24,11 +25,25 @@ export default function ProtectedRoutes({ children }) {
         }
       );
       dispatch(hideLoading());
+      if (res.data.success) {
+        dispatch(setUser(res.data.data));
+      } else {
+        <Navigate to="/login" />;
+        localStorage.clear();
+      }
     } catch (error) {
       dispatch(hideLoading());
+      localStorage.clear();
+      // to clear the token
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (!user) {
+      getUser();
+    }
+  }, [user, getUser]);
   if (localStorage.getItem("token")) {
     return children;
   } else {

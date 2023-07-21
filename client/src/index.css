@@ -14,3 +14,10 @@
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.24)
 }
+
+/* apply doctor page ka submit button ke liye */
+.form-btn{
+  width: 250px !important;
+  margin-top: 90px !important;
+  /* submit press karne ke baad koi filed agr infilled hai toh likh ke ayega bharo isleye important likha hai upar */
+}

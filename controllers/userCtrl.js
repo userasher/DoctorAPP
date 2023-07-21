@@ -1,6 +1,7 @@
 const userModel = require("../models/userModels");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken"); //FOR JSON WEB TOKEN
+const doctorModel = require("../models/doctorModels");
 
 //register call back
 const registerController = async (req, res) => {
@@ -57,7 +58,8 @@ const loginController = async (req, res) => {
 //for authentication
 const authController = async (req, res) => {
   try {
-    const user = await userModel.findOne({ _id: req.body.userId });
+    const user = await userModel.findById({ _id: req.body.userId });
+    user.password == undefined;
     if (!user) {
       return res.status(200).send({
         message: "User Not Found",
@@ -66,10 +68,7 @@ const authController = async (req, res) => {
     } else {
       res.status(200).send({
         success: true,
-        data: {
-          name: user.name,
-          email: user.email,
-        },
+        data: user,
       });
     }
   } catch (error) {
@@ -81,4 +80,41 @@ const authController = async (req, res) => {
     });
   }
 };
-module.exports = { loginController, registerController, authController };
+
+//Apply Doctor controller
+const applyDoctorController = async (req, res) => {
+  try {
+    const newDoctor = await doctorModel({ ...req.body, status: "Pending" });
+    await newDoctor.save();
+    // notification ayega admin ko wo bell icon pe niche wali lines ke vajah se
+    const adminUser = await userModel.findOne({ isAdmin: true });
+    const notification = adminUser.notification;
+    notification.push({
+      type: "apply-doctor-request",
+      message: `${newDoctor.firstName} ${newDoctor.lastName} has applied for a doctor account`,
+      data: {
+        doctorId: newDoctor._id,
+        name: newDoctor.firstName + " " + newDoctor.lastName,
+        onClickPath: "/admin/doctors",
+      },
+    });
+    await userModel.findByIdAndUpdate(adminUser._id, { notification });
+    res.status(201).send({
+      success: true,
+      message: "Doctor account applied successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      error,
+      message: "Error will applying for doctor",
+    });
+  }
+};
+module.exports = {
+  loginController,
+  registerController,
+  authController,
+  applyDoctorController,
+};
