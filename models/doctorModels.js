@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const doctorSchema = new mongoose.Schema(
   {
     userId: {
-      tyoe: String,
+      type: String,
     },
     firstName: {
       type: String,
@@ -14,7 +14,7 @@ const doctorSchema = new mongoose.Schema(
       required: [true, "last name is required"],
     },
     phone: {
-      type: String,
+      type: Number,
       required: [true, "phone no. is required"],
     },
     email: {

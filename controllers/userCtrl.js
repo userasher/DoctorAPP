@@ -90,6 +90,8 @@ const applyDoctorController = async (req, res) => {
     const adminUser = await userModel.findOne({ isAdmin: true });
     const notification = adminUser.notification;
     notification.push({
+      // iski vajah se notification dikh raha hai admin ko
+      //isko Layout.js me get kiya hai
       type: "apply-doctor-request",
       message: `${newDoctor.firstName} ${newDoctor.lastName} has applied for a doctor account`,
       data: {
@@ -108,7 +110,55 @@ const applyDoctorController = async (req, res) => {
     res.status(500).send({
       success: false,
       error,
-      message: "Error will applying for doctor",
+      message: "Error while applying for doctor",
+    });
+  }
+};
+
+//notification controller
+const getAllNotificationController = async (req, res) => {
+  try {
+    const user = await userModel.findOne({ _id: req.body.userId });
+    const seennotification = user.seennotification;
+    const notification = user.notification;
+    seennotification.push(...notification);
+    user.notification = [];
+    user.seennotification = notification;
+    const updatedUser = await user.save();
+    res.status(200).send({
+      success: true,
+      message: "All notification marked as read",
+      data: updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error in Notification",
+      success: false,
+      error,
+    });
+  }
+};
+
+//delete Notification
+const deleteAllNotificationController = async (req, res) => {
+  try {
+    const user = await userModel.findOne({ _id: req.body.userId });
+    user.notification = [];
+    user.seennotification = [];
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+    res.status(200).send({
+      success: true,
+      message: "Notifications Deleted Successfully",
+      data: updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Unable to delete all notifications",
+      error,
     });
   }
 };
@@ -117,4 +167,6 @@ module.exports = {
   registerController,
   authController,
   applyDoctorController,
+  getAllNotificationController,
+  deleteAllNotificationController,
 };
