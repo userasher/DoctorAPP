@@ -93,10 +93,10 @@ const applyDoctorController = async (req, res) => {
       // iski vajah se notification dikh raha hai admin ko
       //isko Layout.js me get kiya hai
       type: "apply-doctor-request",
-      message: `${newDoctor.firstName} ${newDoctor.lastName} has applied for a doctor account`,
+      message: `${newDoctor.firstName} ${newDoctor.LastName} has applied for a doctor account`,
       data: {
         doctorId: newDoctor._id,
-        name: newDoctor.firstName + " " + newDoctor.lastName,
+        name: newDoctor.firstName + " " + newDoctor.LastName,
         onClickPath: "/admin/doctors",
       },
     });

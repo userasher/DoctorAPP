@@ -9,6 +9,7 @@ import { showLoading, hideLoading } from "../redux/features/alertSlice";
 const NotificationPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  //beacuse of below line we are getting the user on noti wala page
   const { user } = useSelector((state) => state.user);
 
   //handle read noti:
@@ -29,6 +30,7 @@ const NotificationPage = () => {
       dispatch(hideLoading());
       if (res.data.success) {
         message.success(res.data.message);
+        window.location.reload();
       } else {
         message.error(res.data.message);
       }
@@ -55,6 +57,7 @@ const NotificationPage = () => {
       dispatch(hideLoading());
       if (res.data.success) {
         message.success(res.data.message);
+        window.location.reload();
       } else {
         message.error(res.data.message);
       }
@@ -68,16 +71,18 @@ const NotificationPage = () => {
     <Layout>
       <h4 className="p-3 text-center">Notification Page</h4>
       <Tabs>
-        <Tabs.TabPane tab="unRead" key={0}>
+        <Tabs.TabPane tab="unRead" key={1}>
           <div className="d-flex justify-content-end">
             <h4
-              className="p-2"
+              className="p-2 text-primary"
               style={{ cursor: "pointer" }}
               onClick={handleMarkAllRead}
             >
               Mark All Read
             </h4>
           </div>
+          {/* below lines ke wajah se wo lines noti vale page pe lines dikh rahe
+          hai ke so and so has applied */}
           {user?.notification.map((notificationMgs) => (
             <div className="card">
               <div
@@ -89,7 +94,7 @@ const NotificationPage = () => {
             </div>
           ))}
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Read" key={1}>
+        <Tabs.TabPane tab="Read" key={0}>
           <div className="d-flex justify-content-end">
             <h4
               className="p-2 text-primary"

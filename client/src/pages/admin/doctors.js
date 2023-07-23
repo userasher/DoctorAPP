@@ -3,7 +3,7 @@ import Layout from "../../components/Layout";
 import axios from "axios";
 import { message, Table } from "antd";
 
-const doctors = () => {
+const Doctors = () => {
   const [doctors, setDoctors] = useState([]);
   //get doctors
   const getDoctors = async () => {
@@ -44,6 +44,7 @@ const doctors = () => {
       );
       if (res.data.success) {
         message.success(res.data.message);
+        window.location.reload;
       }
     } catch (error) {
       message.error("Something went wrong");
@@ -54,6 +55,7 @@ const doctors = () => {
     getDoctors();
   }, []);
 
+  //iss lines ke wajah se doctor list vale page pe wo data aur table show ho raha hai
   const columns = [
     {
       title: "Name",
@@ -69,18 +71,26 @@ const doctors = () => {
       dataIndex: "status",
     },
     {
-      title: "",
-      dataIndex: "phone",
+      title: "Experience",
+      dataIndex: "experience",
+    },
+    {
+      title: "Specialization",
+      dataIndex: "specialization",
+    },
+    {
+      title: "Fees",
+      dataIndex: "feesPerConsultation",
     },
     {
       title: "Actions",
       dataIndex: "actions",
       render: (text, record) => (
         <div className="d-flex">
-          {record.status === "pending" ? (
+          {record.status === "Pending" ? (
             <button
               className="btn btn-success"
-              onClick={() => handleAccountStatus(record, "Approved")}
+              onClick={() => handleAccountStatus(record, "approved")}
             >
               Approve
             </button>
@@ -99,4 +109,4 @@ const doctors = () => {
   );
 };
 
-export default doctors;
+export default Doctors;

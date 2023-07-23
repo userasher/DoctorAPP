@@ -14,8 +14,8 @@ const doctorSchema = new mongoose.Schema(
       required: [true, "last name is required"],
     },
     phone: {
-      type: Number,
-      required: [true, "phone no. is required"],
+      type: String,
+      // required: [true, "phone no. is required"],
     },
     email: {
       type: String,
@@ -37,7 +37,7 @@ const doctorSchema = new mongoose.Schema(
       required: [true, "experience is required"],
     },
     feesPerConsultation: {
-      type: Number,
+      type: String,
       required: [true, "fee is required"],
     },
     status: {

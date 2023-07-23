@@ -13,6 +13,7 @@ const ApplyDoctor = () => {
   //VARIABLES
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  //handleform
   const handleFinish = async (values) => {
     try {
       dispatch(showLoading());
@@ -50,8 +51,9 @@ const ApplyDoctor = () => {
             <Form.Item
               label="First Name"
               name="firstName"
+              // ye required ke vajah se form me red color ka star deikhega
               required
-              // rules={[{ required: true }]}
+              rules={[{ required: true }]}
             >
               <Input type="text" placeholder="Enter your first name" />
             </Form.Item>
@@ -63,7 +65,7 @@ const ApplyDoctor = () => {
               label="Last Name"
               name="LastName"
               required
-              // rules={[{ required: true }]}
+              rules={[{ required: true }]}
             >
               <Input type="text" placeholder="Enter your last name." />
             </Form.Item>
@@ -75,7 +77,7 @@ const ApplyDoctor = () => {
               label="Phone No."
               name=" phone"
               required
-              // rules={[{ required: true }]}
+              rules={[{ required: true }]}
             >
               <Input type="text" placeholder="Enter your phone no." />
             </Form.Item>
@@ -87,9 +89,9 @@ const ApplyDoctor = () => {
               label="Email"
               name="email"
               required
-              // rules={[{ required: true }]}
+              rules={[{ required: true }]}
             >
-              <Input type="text" placeholder="Enter your email" />
+              <Input type="email" placeholder="Enter your email" />
             </Form.Item>
           </Col>
 
@@ -109,7 +111,7 @@ const ApplyDoctor = () => {
               label="Address"
               name="address"
               required
-              // rules={[{ required: true }]}
+              rules={[{ required: true }]}
             >
               <Input type="text" placeholder="Enter your address" />
             </Form.Item>
@@ -125,7 +127,7 @@ const ApplyDoctor = () => {
               label="Specialization"
               name="specialization"
               required
-              // rules={[{ required: true }]}
+              rules={[{ required: true }]}
             >
               <Input type="text" placeholder="Enter your Specialization" />
             </Form.Item>
@@ -137,7 +139,7 @@ const ApplyDoctor = () => {
               label="Experience"
               name="experience"
               required
-              // rules={[{ required: true }]}
+              rules={[{ required: true }]}
             >
               <Input type="text" placeholder="Enter your experience." />
             </Form.Item>
@@ -149,7 +151,7 @@ const ApplyDoctor = () => {
               label="FessPerConsultation"
               name="feesPerConsultation"
               required
-              // rules={[{ required: true }]}
+              rules={[{ required: true }]}
             >
               <Input type="text" placeholder="Enter feesperconsultation" />
             </Form.Item>

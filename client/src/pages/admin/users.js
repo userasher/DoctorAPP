@@ -3,7 +3,7 @@ import Layout from "../../components/Layout";
 import axios from "axios";
 import { Table } from "antd";
 
-const users = () => {
+const Users = () => {
   const [users, setUsers] = useState([]);
 
   //getuser
@@ -47,6 +47,7 @@ const users = () => {
       dataIndex: "isDoctor",
       render: (text, record) => <span>{record.isDoctor ? "Yes" : "No"}</span>,
     },
+    //niche vali lines ke wajah se red button dikh raha reject ka admin ko users list vale page pe
     {
       title: "Actions",
       dataIndex: "actions",
@@ -65,4 +66,4 @@ const users = () => {
   );
 };
 
-export default users;
+export default Users;
