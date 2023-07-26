@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { showLoading, hideLoading } from "../../redux/features/alertSlice";
+import moment from "moment";
 //params and useEffect are hooks used on this page
 
 const Profile = () => {
@@ -15,13 +16,20 @@ const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  //update doc ==================
+  //===================update doc ==================
   const handleFinish = async (values) => {
     try {
       dispatch(showLoading());
       const res = await axios.post(
         "/api/v1/doctor/updateProfile",
-        { ...values, userId: user._id },
+        {
+          ...values,
+          userId: user._id,
+          timings: [
+            moment(values.timings[0]).format("HH:mm"),
+            moment(values.timings[1]).format("HH:mm"),
+          ],
+        },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -33,7 +41,7 @@ const Profile = () => {
         message.success(res.data.message);
         navigate("/");
       } else {
-        message.error(res.data.message);
+        message.error(res.data.success);
       }
     } catch (error) {
       dispatch(hideLoading());
@@ -73,7 +81,13 @@ const Profile = () => {
           layout="vertical"
           onFinish={handleFinish}
           className="m-4"
-          initialValues={doctor}
+          initialValues={{
+            ...doctor,
+            timings: [
+              moment(doctor.timings[0], "HH:mm"),
+              moment(doctor.timings[1], "HH:mm"),
+            ],
+          }}
         >
           <h4>Personal Details:</h4>
           {/* FIRST ROW FOR PERSONAL DETAILS */}
@@ -84,7 +98,7 @@ const Profile = () => {
                 label="First Name"
                 name="firstName"
                 required
-                // rules={[{ required: true }]}
+                rules={[{ required: true }]}
               >
                 <Input type="text" placeholder="Enter your first name" />
               </Form.Item>
@@ -96,7 +110,7 @@ const Profile = () => {
                 label="Last Name"
                 name="LastName"
                 required
-                // rules={[{ required: true }]}
+                rules={[{ required: true }]}
               >
                 <Input type="text" placeholder="Enter your last name." />
               </Form.Item>
@@ -120,7 +134,7 @@ const Profile = () => {
                 label="Email"
                 name="email"
                 required
-                // rules={[{ required: true }]}
+                rules={[{ required: true }]}
               >
                 <Input type="text" placeholder="Enter your email" />
               </Form.Item>
@@ -169,7 +183,7 @@ const Profile = () => {
                 label="Experience"
                 name="experience"
                 required
-                // rules={[{ required: true }]}
+                rules={[{ required: true }]}
               >
                 <Input type="text" placeholder="Enter your experience." />
               </Form.Item>
@@ -180,22 +194,22 @@ const Profile = () => {
                 label="FessPerConsultation"
                 name="feesPerConsultation"
                 required
-                // rules={[{ required: true }]}
+                rules={[{ required: true }]}
               >
                 <Input type="text" placeholder="Enter feesperconsultation" />
               </Form.Item>
             </Col>
 
-            {/* <Col xs={24} md={24} lg={8}>
+            <Col xs={24} md={24} lg={8}>
               <Form.Item
-                label="Timing"
+                label="Timings"
                 name="timings"
                 required
                 // rules={[{ required: true }]}
               >
-                <TimePicker.RangePicker format="hh:mm" />
+                <TimePicker.RangePicker format="HH:mm" />
               </Form.Item>
-            </Col> */}
+            </Col>
 
             <Col xs={24} md={24} lg={8}></Col>
             <Col xs={24} md={24} lg={8}>
